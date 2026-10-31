@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Halloween</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background floating decorations -->
+    <div class="decorations" id="decorations"></div>
+
+    <!-- Sound / Music Toggle Button -->
+    <button class="music-toggle" id="musicToggle" title="Bật/Tắt nhạc Halloween" aria-label="Bật/Tắt nhạc">
+        <span class="music-icon" id="musicIcon">🔊</span>
+        <span class="music-label" id="musicLabel">Nhạc: Bật</span>
+    </button>
+
+    <!-- Audio Elements -->
+    <audio id="clickSound" src="click.wav" preload="auto"></audio>
+    <audio id="bgmSound" src="halloween-bgm.wav" loop preload="auto"></audio>
+
+    <div class="main-container">
+        <!-- Title Header -->
+        <div class="header-title" id="headerTitle">
+            <h1 class="spooky-text"><br><span>Star on the sky</span> <span class="ghost-icon">👻</span></h1>
+            <p class="sub-hint">(Chạm vào phong bì để mở thiệp)</p>
+        </div>
+
+        <!-- Envelope Wrapper -->
+        <div class="envelope-wrapper" id="envelopeWrapper">
+            <div class="envelope" id="envelope">
+                <!-- Back of the envelope -->
+                <div class="envelope-back"></div>
+
+                <!-- Letter inside the envelope -->
+                <div class="letter" id="letter">
+                    <div class="letter-header">
+                        <span>🎃 Star on the sky! 🕸️</span>
+                        <button class="close-btn" id="closeBtn" title="Đóng thiệp" aria-label="Đóng thiệp">&times;</button>
+                    </div>
+                    <div class="letter-body">
+                        <p>Gửi bạn của tôi,</p>
+                        <p>Halloween đã gõ cửa rồi! Chúc bạn có một đêm lễ hội thật lung linh, thu hoạch được thật nhiều kẹo ngọt và những khoảnh khắc đáng nhớ. Mong rằng mọi mệt mỏi hay áp lực đều sẽ bị "xua đuổi" hết trong đêm nay, chỉ còn lại niềm vui và tiếng cười thôi nhé! 🕸️🍭🕯️.</p>                     
+                        <div class="signature">Thân mến,<br><strong>Người gửi bí ẩn 🦇</strong></div>
+                    </div>
+                </div>
+
+                <!-- Side and Bottom Pocket Flaps -->
+                <div class="envelope-pocket"></div>
+
+                <!-- Top Flap -->
+                <div class="envelope-flap" id="envelopeFlap"></div>
+
+                <!-- Envelope Stickers/Decor -->
+                <div class="env-decor spiderweb">🕸️</div>
+                <div class="env-decor skull">💀</div>
+                <div class="env-decor lollipop">🍭</div>
+
+                <!-- Pumpkin Seal Button -->
+                <div class="pumpkin-seal" id="pumpkinSeal">
+                    <svg viewBox="0 0 100 100" class="pumpkin-svg">
+                        <!-- Stem -->
+                        <path d="M44,18 C44,8 56,8 58,18 Z" fill="#2d6a4f" />
+                        <!-- Pumpkin Body -->
+                        <ellipse cx="50" cy="56" rx="38" ry="32" fill="#ff6d00" />
+                        <ellipse cx="50" cy="56" rx="26" ry="32" fill="#ff8500" />
+                        <ellipse cx="50" cy="56" rx="14" ry="32" fill="#ff9100" />
+                        <!-- Eyes -->
+                        <polygon points="32,48 42,36 45,50" fill="#1b1b1b" />
+                        <polygon points="68,48 58,36 55,50" fill="#1b1b1b" />
+                        <!-- Nose -->
+                        <polygon points="50,48 45,56 55,56" fill="#1b1b1b" />
+                        <!-- Mouth -->
+                        <path d="M30,62 Q50,78 70,62 L63,68 L57,63 L50,70 L43,63 L37,68 Z" fill="#1b1b1b" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

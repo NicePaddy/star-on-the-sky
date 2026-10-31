@@ -1,0 +1,429 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: radial-gradient(circle at center, #3b1c32 0%, #1a0b1e 70%, #0d0410 100%);
+    font-family: 'Quicksand', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #fff;
+    position: relative;
+    user-select: none;
+}
+
+/* Music Toggle Button */
+.music-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 100;
+    background: rgba(28, 29, 33, 0.85);
+    border: 1.5px solid rgba(255, 109, 0, 0.55);
+    color: #ffd8b5;
+    padding: 8px 14px;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(255, 109, 0, 0.2);
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    backdrop-filter: blur(6px);
+}
+
+.music-toggle:hover {
+    background: rgba(255, 109, 0, 0.22);
+    border-color: #ff6d00;
+    transform: scale(1.04);
+}
+
+.music-toggle:active {
+    transform: scale(0.96);
+}
+
+.music-toggle.muted {
+    opacity: 0.7;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Click visual ripple feedback */
+.click-ripple {
+    position: fixed;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 145, 0, 0.85) 0%, rgba(255, 109, 0, 0) 70%);
+    border: 1.5px solid rgba(255, 165, 0, 0.75);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%) scale(0.5);
+    animation: rippleAnim 0.45s ease-out forwards;
+}
+
+@keyframes rippleAnim {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(3.2);
+        opacity: 0;
+    }
+}
+
+/* Floating Background Decorations */
+.decorations {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floating-item {
+    position: absolute;
+    font-size: 1.4rem;
+    opacity: 0.35;
+    animation: floatAround linear infinite;
+}
+
+@keyframes floatAround {
+    0% {
+        transform: translateY(105vh) rotate(0deg);
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.4;
+    }
+    85% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.main-container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    width: 100%;
+    max-width: 460px;
+}
+
+/* Header Spooky Title */
+.header-title {
+    text-align: center;
+    margin-bottom: 28px;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+/* Shift title slightly when envelope opens so letter doesn't collide on mobile */
+body.card-open .header-title {
+    opacity: 0.25;
+    transform: translateY(-15px) scale(0.92);
+}
+
+.spooky-text {
+    font-family: 'Creepster', cursive;
+    font-size: clamp(2.3rem, 8vw, 3.3rem);
+    color: #ff6d00;
+    letter-spacing: 3px;
+    line-height: 1.08;
+    text-shadow: 0 4px 0 #5c1d00, 0 0 20px rgba(255, 109, 0, 0.7);
+}
+
+.spooky-text span {
+    font-size: clamp(2.6rem, 9vw, 3.7rem);
+}
+
+.ghost-icon {
+    display: inline-block;
+    animation: bounceGhost 2s ease-in-out infinite;
+}
+
+@keyframes bounceGhost {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-8px) rotate(8deg); }
+}
+
+.sub-hint {
+    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+    color: #d8b4e2;
+    margin-top: 8px;
+    opacity: 0.85;
+}
+
+/* Envelope Styling - Fluid & Responsive */
+.envelope-wrapper {
+    position: relative;
+    margin-top: 10px;
+    cursor: pointer;
+    perspective: 1000px;
+    width: min(320px, 88vw);
+    height: calc(min(320px, 88vw) * 0.656);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #1c1d21;
+    border-radius: 10px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 109, 0, 0.15);
+    transition: transform 0.4s ease;
+}
+
+@media (hover: hover) {
+    .envelope-wrapper:hover .envelope {
+        transform: translateY(-5px);
+    }
+    .envelope-wrapper:hover .pumpkin-seal {
+        transform: translate(-50%, -50%) scale(1.08);
+    }
+}
+
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    background: #18191c;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+/* Pocket (Front Left/Right/Bottom Flaps) */
+.envelope-pocket {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: 10px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.envelope-pocket::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #25262b;
+    clip-path: polygon(0 0, 50% 52%, 0 100%);
+}
+
+.envelope-pocket::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #2c2d33;
+    clip-path: polygon(100% 0, 50% 52%, 100% 100%);
+}
+
+/* Bottom triangle overlay */
+.envelope::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #212226;
+    clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+    border-radius: 0 0 10px 10px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Top Flap */
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #323339;
+    clip-path: polygon(0 0, 50% 56%, 100% 0);
+    transform-origin: top;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s 0.2s;
+    z-index: 4;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Decorations on Envelope */
+.env-decor {
+    position: absolute;
+    z-index: 5;
+    font-size: clamp(1.15rem, 4.5vw, 1.4rem);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.env-decor.spiderweb {
+    bottom: 16%;
+    left: 7%;
+    opacity: 0.65;
+    font-size: clamp(1.35rem, 5vw, 1.7rem);
+}
+
+.env-decor.skull {
+    top: 29%;
+    right: 8%;
+    transform: rotate(15deg);
+}
+
+.env-decor.lollipop {
+    top: 18%;
+    left: 29%;
+    transform: rotate(-15deg);
+    z-index: 4;
+}
+
+/* Pumpkin Seal */
+.pumpkin-seal {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24%;
+    aspect-ratio: 1 / 1;
+    z-index: 6;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.6));
+}
+
+.pumpkin-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Letter Inside */
+.letter {
+    position: absolute;
+    bottom: 5%;
+    left: 4.5%;
+    width: 91%;
+    height: 88%;
+    background: #fff8ee;
+    color: #2b1d28;
+    border-radius: 8px;
+    padding: 16px;
+    z-index: 2;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.35);
+    border: 2px dashed #ff7b00;
+    transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.5s ease, z-index 0.1s;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    cursor: default;
+    user-select: text;
+}
+
+.letter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ffd8b5;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: #d94e0f;
+    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: #8c584c;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+}
+
+.close-btn:hover {
+    color: #d94e0f;
+}
+
+.letter-body p {
+    font-size: clamp(0.85rem, 3.5vw, 0.92rem);
+    line-height: 1.55;
+    margin-bottom: 8px;
+}
+
+.signature {
+    text-align: right;
+    margin-top: 12px;
+    font-size: clamp(0.82rem, 3.3vw, 0.88rem);
+    color: #6a2c70;
+}
+
+/* OPEN STATE */
+.envelope.open .envelope-flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.envelope.open .pumpkin-seal,
+.envelope.open .env-decor.lollipop {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.4);
+}
+
+.envelope.open .letter {
+    transform: translateY(-95px);
+    height: 270px;
+    z-index: 7;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+}
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 480px) {
+    .main-container {
+        padding: 12px;
+    }
+
+    .header-title {
+        margin-bottom: 22px;
+    }
+
+    .envelope.open .letter {
+        transform: translateY(-80px);
+        height: 245px;
+        padding: 14px;
+    }
+
+    .music-toggle {
+        top: 12px;
+        right: 12px;
+        padding: 6px 12px;
+        font-size: 0.78rem;
+    }
+}
+
+@media (max-height: 600px) {
+    .header-title {
+        margin-bottom: 12px;
+    }
+    .envelope.open .letter {
+        transform: translateY(-60px);
+        height: 215px;
+    }
+}
